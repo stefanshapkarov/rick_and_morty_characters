@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
 import { getCharacters } from "@/GraphQL/query";
 
-function Characters({ page, status = '', species = '' }) {
+function Characters({ page, status = '', species = '', onTotalPagesUpdate }) {
 
     const { error, loading, data } = useQuery(getCharacters(page, status, species));
 
@@ -13,8 +13,11 @@ function Characters({ page, status = '', species = '' }) {
     const [sortBy, setSortBy] = useState('');
 
     useEffect(() => {
-        console.log(data);
         if (data) {
+            if (onTotalPagesUpdate && data.characters.info) {
+                onTotalPagesUpdate(data.characters.info.pages);
+            }
+
             if (sortBy === '') {
                 setCharacters(data.characters.results);
             } else {
@@ -27,7 +30,14 @@ function Characters({ page, status = '', species = '' }) {
                 setCharacters(sortedCharacters);
             }
         }
-    }, [data, sortBy]);
+    }, [data, sortBy, onTotalPagesUpdate]);
+
+    if (loading) {
+        return <div className="text-center py-4">Loading...</div>;
+    }
+    if (error) {
+        return <div className="text-center py-4 text-red-500">Error: {error.message}</div>;
+    }
 
     return (
         <div>
