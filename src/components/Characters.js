@@ -20,7 +20,7 @@ function Characters({ page, status = '' }) {
     return (
         <div className="grid grid-cols-4 gap-4">
             {characters.map((character) => (
-                <div key={character.name} className="border p-4">
+                <div key={character.name + character.origin.name} className="border p-4">
                     <h3 className="font-bold text-lg">{character.name}</h3>
                     <div>
                         <p>Status: {character.status}</p>
