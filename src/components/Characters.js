@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
-import { getCharacters } from "./query"; 
+import { getCharacters } from "@/GraphQL/query";
 
-function Characters({ page }) {
+function Characters({ page, status = '' }) {
 
-    const { error, loading, data } = useQuery(getCharacters(page));
+    const { error, loading, data } = useQuery(getCharacters(page, status));
 
     const [characters, setCharacters] = useState([]);
 
