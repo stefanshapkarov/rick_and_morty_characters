@@ -24,6 +24,7 @@ export default function Home() {
         <div>
           <StatusFilter status={status} onStatusChange={handleStatusChange} />
           <SpeciesFilter species={species} onSpeciesChange={handleSpeciesChange} />
+          <hr className="mb-5" />
         </div>
         <Characters page={1} status={status} species={species} />
       </div>
