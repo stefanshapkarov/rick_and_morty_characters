@@ -5,14 +5,17 @@ export const getCharacters = (page = 1, status = '', species = '') => {
     let filterString = '';
 
     if (status !== '') {
-        filterString += `, filter: status: ${status}`;
+        filterString += `, filter: { status: "${status}"`;
+        if (species === '') {
+            filterString += ` }`;
+        }
     }
 
     if (species !== '') {
         if (filterString != '') {
-            filterString += `, species: ${species}`;
+            filterString += `, species: "${species}" }`;
         } else {
-            filterString += `, filter: species: ${species}`;
+            filterString += `, filter: { species: "${species}" }`;
         }
     }
 
